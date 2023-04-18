@@ -1,7 +1,7 @@
 # FootBall Position Table
 
 <!--- texto en negritas --->
-**Con esta aplicacion se pueden visualizar los equipos calificados a la liguilla del futbol mexicano.**
+**Con esta aplicacion se pueden visualizar los equipos calificados a la liguilla del futbol mexicano, a traves de un bot de Discord.**
 
 # ¿Que necesito?
 Debes tener instalado Node.js y seguir los siguientes pasos:
