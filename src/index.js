@@ -10,7 +10,7 @@ client.once(Events.ClientReady, () => {
 client.on('interactionCreate', interaction => {
     console.log(interaction.isCommand())
     if (!interaction.isCommand()) return;
-
+se 
     const { commandName } = interaction;
 
     if (commandName === 'ping') {
@@ -36,7 +36,6 @@ function rankingleage(tablaGeneral, topRank) {
     ).slice(0, topRank);
     const nombreClubYRank = [];
     for (let i = 0; i < equiposCalificados.length; i++) {
-        //nombreClubYRank.push({ nombreClub: equiposCalificados[i].nombreClub, rank: equiposCalificados[i].rank });
         nombreClubYRank.push(`${equiposCalificados[i].rank}.- ${equiposCalificados[i].nombreClub}`);
     }
     return nombreClubYRank;
