@@ -6,11 +6,11 @@
 # ¿Que necesito?
 Debes tener instalado Node.js y seguir los siguientes pasos:
 
->npm install express
->
 > npm install axios
 >
->npm install discor.json
+>npm install discord.json
+>
+>npm install @discordjs/builders @discordjs/rest discord-api-types
 
 # ¿Cómo lo ejecuto?
 
