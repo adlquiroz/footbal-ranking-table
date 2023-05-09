@@ -69,10 +69,8 @@ function tablaLiga(tablaGeneral, topRank, team) {
     for (let i = 0; i < equiposCalificados2.length; i++) {
         if (!team) {
             nombreClubYRank.push(`${equiposCalificados2[i].Lugar}.- ${equiposCalificados2[i].Club} - Goles a favor: ${equiposCalificados2[i].GF}`);
-            //console.log(`${equiposCalificados2[i].rank}.- ${equiposCalificados2[i].nombreClub} - Goles a favor: ${equiposCalificados2[i].golesFavor}`)
         } else if (team === equiposCalificados2[i].nombreClubUrl) {
             nombreClubYRank.push(`${equiposCalificados2[i].Lugar}.- ${equiposCalificados2[i].Club} - Goles a favor: ${equiposCalificados2[i].GF}`);
-            //console.log(`${equiposCalificados2[i].rank}.- ${equiposCalificados2[i].nombreClub} - Goles a favor: ${equiposCalificados2[i].golesFavor}`)
             break;
         }
     }
@@ -94,7 +92,3 @@ function goleadoresEquipo(tablaGoleadores, rank) {
     }
     return tablaDeGoles;
 }
-
-//valor false en team lista completa
-//si el valor es "equipox" mandar el elemento "equipox"
-//si el valor no es false y no es el nombre de algun equipo devolver mensaje "equipo no existe"
