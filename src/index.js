@@ -8,17 +8,37 @@ client.once(Events.ClientReady, () => {
 });
 
 client.on('interactionCreate', interaction => {
-    console.log(interaction.isCommand())
     if (!interaction.isCommand()) return;
-se 
     const { commandName } = interaction;
-
-    if (commandName === 'ping') {
-        axios.get('https://ligamx.net/ws/aHR0cDovL3NpaWRhZG1pbi5saWdhbXgubmV0L3dlYnNlcnZpY2VzL3BydGxfd2ViX2pzb25kYXRhLmFzaHg@aHNhaD18NWVhYjQzNTAzMDQ4NWZmMTQ0ZGU5NzY0MWFiZjE1NWZlNDhkYTBmZTI1MzRiODVlNmFjNzM3MDJhNTdiN2Q3ZjVjOTgxZWQzZDZjODZjODFiOTU2YTNmNDAyMGFhNDhkNjhhNmVlNzUxOTkwOWRmMTQ1MjIyZDJmNzRmNDM2ZWR8JnBzV2lkZ2V0PVBSVExfT2ZlbnNpdmEmb2JqSWREaXZpc2lvbj0xJm9iaklkVGVtcG9yYWRhPTczJm9iaklEVG9ybmVvPTI=')
+    if (commandName === 'calificados') {
+        axios.get('https://ligamx.net/ws/aHR0cDovL3NpaWRhZG1pbi5saWdhbXgubmV0L3dlYnNlcnZpY2VzL3BydGxfd2ViX2pzb25kYXRhLmFzaHg@aHNhaD18NzBlMzJlY2E4ZTRmOWY5ZGVmYjVkZmVjNWEzNzVhMjg3N2QwN2M0Y2RkZTM1OWQ3ZDE2ODhhNDdlMmUwZWZlNDg2NTEyZmU4OTdkMzlhZmFmZTRhYmEyNzM2ODk2ZDViOGVjY2ZkZDhhZmIzYmNmMTA3NDFlMjY2ZjFiYWQ2MTN8JnBzV2lkZ2V0PVBSVExfQ2xzZlNtbGRMZ2xsVE9QJm9iaklERGl2aXNpb249MSZvYmpJRFRlbXBvcmFkYT03MyZvYmpJRFRvcm5lbz0yJm9ialRPUD0yOA==')
             .then(async function (response) {
                 const tablaGeneral = response.data.DatosJSON;
                 const equiposCalificados = rankingleage(tablaGeneral, 12).join('\n');
                 await interaction.reply(equiposCalificados);
+            })
+            .catch(async (error) => {
+                console.log(error)
+                await interaction.reply('Error al obtener los datos');
+            })
+    } else if (commandName === 'tabla_general') {
+        const team = interaction.options.getString('equipo');
+        axios.get('https://ligamx.net/ws/aHR0cDovL3NpaWRhZG1pbi5saWdhbXgubmV0L3dlYnNlcnZpY2VzL3BydGxfd2ViX2pzb25kYXRhLmFzaHg@aHNhaD18NzBlMzJlY2E4ZTRmOWY5ZGVmYjVkZmVjNWEzNzVhMjg3N2QwN2M0Y2RkZTM1OWQ3ZDE2ODhhNDdlMmUwZWZlNDg2NTEyZmU4OTdkMzlhZmFmZTRhYmEyNzM2ODk2ZDViOGVjY2ZkZDhhZmIzYmNmMTA3NDFlMjY2ZjFiYWQ2MTN8JnBzV2lkZ2V0PVBSVExfQ2xzZlNtbGRMZ2xsVE9QJm9iaklERGl2aXNpb249MSZvYmpJRFRlbXBvcmFkYT03MyZvYmpJRFRvcm5lbz0yJm9ialRPUD0yOA==')
+            .then(async function (response) {
+                const tablaGeneral = response.data.DatosJSON;
+                const equiposCalificados2 = tablaLiga(tablaGeneral, undefined, team).join('\n');
+                await interaction.reply(equiposCalificados2);
+            })
+            .catch(async (error) => {
+                console.log(error)
+                await interaction.reply('Error al obtener los datos');
+            })
+    } else if (commandName === 'lideres_de_goleo') {
+        axios.get('https://ligamx.net/ws/aHR0cDovL3NpaWRhZG1pbi5saWdhbXgubmV0L3dlYnNlcnZpY2VzL3BydGxfd2ViX2pzb25kYXRhLmFzaHg@aHNhaD18NzBlMzJlY2E4ZTRmOWY5ZGVmYjVkZmVjNWEzNzVhMjg3N2QwN2M0Y2RkZTM1OWQ3ZDE2ODhhNDdlMmUwZWZlNDg2NTEyZmU4OTdkMzlhZmFmZTRhYmEyNzM2ODk2ZDViOGVjY2ZkZDhhZmIzYmNmMTA3NDFlMjY2ZjFiYWQ2MTN8JnBzV2lkZ2V0PVBSVExfR2xlb0luZHYmb2JqVE9QPTEwJm9iaklkRGl2aXNpb249MSZvYmpJZFRlbXBvcmFkYT03MyZvYmpJRFRvcm5lbz0y')
+            .then(async function (response) {
+                const tablaGoleadores = response.data.DatosJSON;
+                const tablaDeGoleo = goleadoresEquipo(tablaGoleadores).join('\n');
+                await interaction.reply(tablaDeGoleo);
             })
             .catch(async (error) => {
                 console.log(error)
@@ -32,11 +52,49 @@ client.login(token);
 
 function rankingleage(tablaGeneral, topRank) {
     const equiposCalificados = tablaGeneral.sort(
-        (elementoA, elementoB) => elementoA.rank - elementoB.rank
+        (elementoA, elementoB) => elementoA.Lugar - elementoB.Lugar
     ).slice(0, topRank);
     const nombreClubYRank = [];
     for (let i = 0; i < equiposCalificados.length; i++) {
-        nombreClubYRank.push(`${equiposCalificados[i].rank}.- ${equiposCalificados[i].nombreClub}`);
+        nombreClubYRank.push(`${equiposCalificados[i].Lugar}.- ${equiposCalificados[i].Club}`);
     }
     return nombreClubYRank;
 }
+
+function tablaLiga(tablaGeneral, topRank, team) {
+    const equiposCalificados2 = tablaGeneral.sort(
+        (elementoA, elementoB) => elementoA.Lugar - elementoB.Lugar
+    ).slice(0, topRank);
+    const nombreClubYRank = [];
+    for (let i = 0; i < equiposCalificados2.length; i++) {
+        if (!team) {
+            nombreClubYRank.push(`${equiposCalificados2[i].Lugar}.- ${equiposCalificados2[i].Club} - Goles a favor: ${equiposCalificados2[i].GF}`);
+            //console.log(`${equiposCalificados2[i].rank}.- ${equiposCalificados2[i].nombreClub} - Goles a favor: ${equiposCalificados2[i].golesFavor}`)
+        } else if (team === equiposCalificados2[i].nombreClubUrl) {
+            nombreClubYRank.push(`${equiposCalificados2[i].Lugar}.- ${equiposCalificados2[i].Club} - Goles a favor: ${equiposCalificados2[i].GF}`);
+            //console.log(`${equiposCalificados2[i].rank}.- ${equiposCalificados2[i].nombreClub} - Goles a favor: ${equiposCalificados2[i].golesFavor}`)
+            break;
+        }
+    }
+    if (nombreClubYRank.length === 0) {
+        nombreClubYRank.push(`El equipo ${team} no se ha encontrado`)
+    }
+    return nombreClubYRank;
+}
+
+function goleadoresEquipo(tablaGoleadores, rank) {
+    const tablaDeGoleo = tablaGoleadores
+        .sort((elementoA, elementoB) => elementoA.goles + elementoB.goles)
+        .slice(0, rank);
+    let tablaDeGoles = [];
+    for (let i = 0; i < tablaDeGoleo.length; i++) {
+        tablaDeGoles.push(
+            `EQUIPO: ${tablaDeGoleo[i].nombreClub}\n NOMBRE: ${tablaDeGoleo[i].nombrePopular}\n GOLES:${tablaDeGoleo[i].goles}\n`
+        );
+    }
+    return tablaDeGoles;
+}
+
+//valor false en team lista completa
+//si el valor es "equipox" mandar el elemento "equipox"
+//si el valor no es false y no es el nombre de algun equipo devolver mensaje "equipo no existe"
