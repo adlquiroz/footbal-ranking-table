@@ -15,8 +15,8 @@ client.on('interactionCreate', async (interaction) => {
     if (commandName === 'calificados') {
         try {
             const equiposCalificados = await calificados();
-            await interaction.reply(equiposCalificados);
-
+            console.log(equiposCalificados)
+            await interaction.reply(equiposCalificados.join('\n'));
         } catch (e) {
             console.log(e)
             await interaction.reply('Error al obtener los datos');
