@@ -18,7 +18,7 @@ client.on('interactionCreate', async (interaction) => {
             await interaction.reply(equiposCalificados);
 
         } catch (e) {
-            console.log(error)
+            console.log(e)
             await interaction.reply('Error al obtener los datos');
         }
     } else if (commandName === 'tabla_general') {
