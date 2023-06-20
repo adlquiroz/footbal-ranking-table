@@ -11,7 +11,11 @@ const commands = [
 			.setName('equipo')
 			.setDescription('tabla General')
 			.addStringOption(option => option.setName('equipo').setDescription('Nombre del equipo a consultar'))),
-	new SlashCommandBuilder().setName('lideres_de_goleo').setDescription('Goleadores por equipo'),
+	new SlashCommandBuilder().setName('lideres_de_goleo').setDescription('Goleadores por equipo').addSubcommand(subcommand =>
+		subcommand
+			.setName('jugador')
+			.setDescription('lideres de goleo')
+			.addStringOption(option => option.setName('jugador').setDescription('Nombre del juagor a consultar'))),
 	new SlashCommandBuilder().setName('user').setDescription('Replies with user info!'),
 ]
 	.map(command => command.toJSON());
